@@ -1,0 +1,479 @@
+/* Modern Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Properties */
+:root {
+    --primary: #ff5a8b;
+    --primary-light: #ff8ac0;
+    --primary-dark: #e14476;
+    --secondary: #ffe6f2;
+    --text: #2a2a2a;
+    --text-light: #666;
+    --white: #ffffff;
+    --shadow: 0 8px 30px rgba(0,0,0,0.12);
+    --shadow-strong: 0 12px 40px rgba(255,90,139,0.2);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles */
+body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: linear-gradient(to bottom, #fafafa, #ffffff);
+}
+
+/* Enhanced Hero Section */
+.hero {
+    min-height: 90vh;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    padding: 120px 8vw;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    opacity: 0.1;
+    animation: backgroundShift 30s linear infinite;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    background: var(--white);
+    transform: rotate(-3deg);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-image {
+    position: relative;
+    z-index: 2;
+    width: 300px;
+    height: 300px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+}
+
+.bot-name {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, var(--white), rgba(255,255,255,0.9));
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shimmer 2s infinite;
+}
+
+.description {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2.5rem;
+}
+
+/* Enhanced Button Styles */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        transparent
+    );
+    transition: var(--transition);
+}
+
+.btn:hover::before {
+    left: 100%;
+    transition: 0.5s;
+}
+
+.hero-buttons .btn {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.btn.vote {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+}
+
+.btn.support {
+    background: rgba(255,255,255,0.2);
+    color: var(--white);
+    ;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--primary-dark);
+    border: none
+}
+
+.btn.add-bot {
+    background: var(--white);
+    color: var(--primary);
+    ;
+    color: var(--primary-dark);
+    font-weight: 700;
+    border: none
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-strong);
+}
+
+/* Enhanced Features Section */
+.features {
+    position: relative;
+    z-index: 2;
+    padding: 100px 8vw;
+    background: var(--white);
+}
+
+.features h2 {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 4rem;
+    color: var(--primary);
+    animation: fadeInUp 1s ease-out;
+}
+
+.feature-list {
+    grid-template-columns: 1fr;
+}
+
+.feature-item {
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 2rem;
+    border-radius: 16px;
+    transition: var(--transition);
+    animation: fadeInUp 0.5s ease-out both;
+}
+
+.feature-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.feature-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.feature-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.feature-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.feature-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-strong);
+}
+
+.feature-item i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.feature-item:hover i {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Fixed Secondary Hero Section */
+.secondary-hero {
+    padding: 100px 8vw;
+    background: var(--secondary);
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.device-image {
+    order: -1;
+}
+
+.device-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+    transition: var(--transition);
+    animation: float 6s ease-in-out infinite;
+}
+
+.secondary-hero-content {
+    animation: fadeInRight 1s ease-out;
+}
+
+.secondary-hero-content h2 {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.add-bot-secondary {
+    margin-top: 2rem;
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* Enhanced Footer */
+.footer {
+    padding: 60px 8vw;
+    background: var(--text);
+    position: relative;
+    overflow: hidden;
+}
+
+.masonry-links {
+    flex-direction: column;
+        align-items: center;
+}
+
+.footer-link {
+    color: var(--white);
+    opacity: 0.8;
+    transition: var(--transition);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.footer-link:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.1);
+}
+
+.copyright {
+    text-align: left;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100%
+}
+
+50% {
+    transform: translateY(-20px);
+}
+
+@keyframes fadeInUp {
+    from
+}
+
+to {
+    background-position: 100% 100%;
+}
+
+@keyframes fadeInRight {
+    from
+}
+
+@keyframes shimmer {
+    0%
+}
+
+100% {
+    background-position: 200% center;
+}
+
+@keyframes backgroundShift {
+    from
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .secondary-hero
+}
+
+@media (max-width: 768px) {
+    .hero
+}
+
+.hero-buttons {
+    justify-content: center;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after
+}
+
+/* Update hero section background for better contrast */
+.hero {
+    min-height: 90vh;
+    background: linear-gradient(135deg, 
+        var(--primary-dark), 
+        var(--primary),
+        var(--primary-light)
+    );
+    padding: 120px 8vw;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+}
+
+/* Improve text protection */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+    animation: fadeInUp 1s ease-out;
+    /* Add text protection */
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced bot name styling */
+.bot-name {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    /* Remove gradient text as it affects readability */
+    background: none;
+    -webkit-background-clip: initial;
+}
+
+/* Improve description visibility */
+.description {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--white);
+    margin-bottom: 2.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+}
+
+/* Update button styles for better visibility */
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    /* Add stronger box shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Update hero buttons for better contrast */
+.btn.vote {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Add hover effects */
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Update hero background pattern for better visibility */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    opacity: 0.07;
+    animation: backgroundShift 30s linear infinite;
+}
+
+/* Update hero wave for smoother transition */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    background: var(--white);
+    transform: rotate(-3deg);
+    z-index: 1;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+}
