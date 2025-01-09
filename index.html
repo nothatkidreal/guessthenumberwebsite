@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuessTheNumber</title>
+    <style>
+        :root {
+            --primary: #FF69B4;
+            --background: #ffffff;
+            --text: #000000;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 105, 180, 0.1);
+            --border-color: rgba(255, 105, 180, 0.1);
+            --hover: #ff4d94;
+            --secondary-text: #666666;
+        }
+
+        [data-theme="dark"] {
+            --background: #1a1f36;
+            --text: #ffffff;
+            --nav-bg: rgba(26, 31, 54, 0.95);
+            --card-bg: rgba(255, 105, 180, 0.1);
+            --border-color: rgba(255, 105, 180, 0.1);
+            --secondary-text: #8f9bb3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+        }
+
+        .nav-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .button {
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .primary-button {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .primary-button:hover {
+            background-color: var(--hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .secondary-button {
+            background-color: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .secondary-button:hover {
+            background-color: rgba(255, 105, 180, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 105, 180, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-description {
+            color: var(--secondary-text);
+            line-height: 1.6;
+        }
+
+        .statistics {
+            background: var(--card-bg);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--secondary-text);
+        }
+
+        .premium-features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .premium-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .premium-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .premium-card ul {
+            list-style: none;
+            color: var(--secondary-text);
+        }
+
+        .premium-card ul li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .premium-card ul li::before {
+            content: "â";
+            color: var(--primary);
+        }
+
+        .herologo {
+            width: 40%;
+            height: auto;
+        }
+
+        footer {
+            background: var(--nav-bg);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">
+            <img src="logo.png" alt="Logo">
+            <span>GuessTheNumber</span>
+        </div>
+        <div class="nav-links">
+            <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+            <a href="https://guss-the-number-document.gitbook.io/guess-the-number-document">Guilds</a>
+            <a href="https://guessthenumber.cc/premium">Premium</a>
+            <a href="https://guss-the-number-document.gitbook.io/">Documentation</a>
+            <a href="https://discord.gg/4mdCk8EGvC">Support</a>
+            <a href="https://discord.com/oauth2/authorize?client_id=1247578049625456660&permissions=1024&integration_type=0&scope=bot" class="button primary-button">Add Bot</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <img src="logo.png" alt="Logo" class="herologo">
+            <h1>Guess The Number Discord Bot</h1>
+            <p class="subtitle">Create engaging number guessing games that bring your community together. Set up challenges, reward winners, and watch your server come alive with friendly competition.</p>
+            <div class="cta-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1247578049625456660&permissions=1024&integration_type=0&scope=bot" class="button primary-button">Add to Discord</a>
+                <a href="https://guss-the-number-document.gitbook.io/" class="button secondary-button">View Documentation</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Easy Setup</h3>
+                <p class="feature-description">Get the bot added to your server with a few simple clicks. Start setting up number guessing games right away!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3 class="feature-title">Engage Members</h3>
+                <p class="feature-description">Server members can guess numbers, compete with each other, and earn fun rewards. Perfect for community engagement!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3 class="feature-title">Full Control</h3>
+                <p class="feature-description">Customize the game settings, such as the number range, the rewards, and more to fit your server's needs!</p>
+            </div>
+        </section>
+
+        <section class="statistics">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>69k+</h3>
+                    <p>Active Servers</p>
+                </div>
+                <div class="stat-item">
+                    <h3>420K+</h3>
+                    <p>Daily Games</p>
+                </div>
+                <div class="stat-item">
+                    <h3>200T+</h3>
+                    <p>Happy Players</p>
+                </div>
+                <div class="stat-item">
+                    <h3>112%</h3>
+                    <p>Uptime</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="premium-features">
+            <h2 class="section-title">Premium Features</h2>
+            <div class="premium-grid">
+                <div class="premium-card">
+                    <h3>Enhanced Gameplay</h3>
+                    <ul>
+                        <li>Custom number ranges</li>
+                        <li>Advanced hint system</li>
+                        <li>Infinite Mode (Guess Forever!)</li>
+                    </ul>
+                </div>
+                <div class="premium-card">
+                    <h3>Community Features</h3>
+                    <ul>
+                        <li>Global leaderboards</li>
+                        <li>Custom rewards system (For Giveaways)</li>
+                        <li>Player statistics</li>
+                    </ul>
+                </div>
+                <div class="premium-card">
+                    <h3>Admin Tools</h3>
+                    <ul>
+                        <li>Event Manager Tools</li>
+                        <li>Advanced configuration</li>
+                        <li>Priority support</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="https://guessthenumber.cc/premium">Premium</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://guss-the-number-document.gitbook.io/">Documentation</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="https://discord.gg/4mdCk8EGvC">Discord Server</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="https://www.ecosia.org/search?method=index&q=hi,+so+uhh..+didnt+you+have+this+earlier?+and+don%27t+question+my+search+engine+choices+:(&sfn=true">Privacy Policy</a></li>
+                    <li><a href="https://guessthenumber.cc/terms">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check for saved theme preference or default to 'light'
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        // Toggle theme function
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        // Update theme icon
+        function updateThemeIcon(theme) {
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.innerHTML = theme === 'light' ? '🌗' : '☀️';
+        }
+
+        // Load theme on page load
+        loadTheme();
+    </script>
+</body>
+</html>
